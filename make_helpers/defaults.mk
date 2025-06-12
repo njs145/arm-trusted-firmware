@@ -67,7 +67,7 @@ CTX_INCLUDE_FPREGS		:= 0
 CTX_INCLUDE_SVE_REGS		:= 0
 
 # Debug build
-DEBUG				:= 0
+DEBUG				:= 1
 
 # By default disable authenticated decryption support.
 DECRYPTION_SUPPORT		:= none
