@@ -5,7 +5,7 @@
         "name": "Debug BL31",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build/qemu/debug/bl31/bl31.elf",  
+        "program": "${workspaceFolder}/build/qemu/debug/bl31/bl31.elf",
         "miDebuggerPath": "/opt/arm-gnu-toolchain-14.2.rel1-x86_64-aarch64-none-elf/bin/aarch64-none-elf-gdb",
         "args": [],
         "stopAtEntry": true,
@@ -18,7 +18,7 @@
             "ignoreFailures": true
           },
           {
-            "text": "add-symbol-file /home/song/study/arm-trusted-firmware/build/qemu/debug/bl31/bl31.elf 0xe090000",
+            "text": "add-symbol-file ${workspaceFolder}/build/qemu/debug/bl31/bl31.elf 0xe090000",
             "ignoreFailures": true
           },
           {
@@ -30,7 +30,66 @@
             "ignoreFailures": true
           }
         ]
+      },
+      {
+        "name": "Debug BL2",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/qemu/debug/bl2/bl2.elf",  
+        "miDebuggerPath": "/opt/arm-gnu-toolchain-14.2.rel1-x86_64-aarch64-none-elf/bin/aarch64-none-elf-gdb",
+        "args": [],
+        "stopAtEntry": true,
+        "cwd": "${workspaceFolder}",
+        "MIMode": "gdb",
+        "targetArchitecture": "arm64",
+        "setupCommands": [
+          {
+            "text": "target remote :1234",
+            "ignoreFailures": true
+          },
+          {
+            "text": "add-symbol-file ${workspaceFolder}/build/qemu/debug/bl2/bl2.elf 0xe05b000",
+            "ignoreFailures": true
+          },
+          {
+            "text": "b bl2_entrypoint",
+            "ignoreFailures": true
+          },
+          {
+            "text": "continue",
+            "ignoreFailures": true
+          }
+        ]
+      },
+      {
+        "name": "Debug BL1",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/qemu/debug/bl1/bl1.elf",  
+        "miDebuggerPath": "/opt/arm-gnu-toolchain-14.2.rel1-x86_64-aarch64-none-elf/bin/aarch64-none-elf-gdb",
+        "args": [],
+        "stopAtEntry": true,
+        "cwd": "${workspaceFolder}",
+        "MIMode": "gdb",
+        "targetArchitecture": "arm64",
+        "setupCommands": [
+          {
+            "text": "target remote :1234",
+            "ignoreFailures": true
+          },
+          {
+            "text": "add-symbol-file ${workspaceFolder}/build/qemu/debug/bl1/bl1.elf 0x0",
+            "ignoreFailures": true
+          },
+          {
+            "text": "b bl1_entrypoint",
+            "ignoreFailures": true
+          },
+          {
+            "text": "continue",
+            "ignoreFailures": true
+          }
+        ]
       }
     ]
   }
-  
