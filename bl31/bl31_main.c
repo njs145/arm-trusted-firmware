@@ -5,6 +5,7 @@
  */
 
 #include <assert.h>
+#include <stdint.h>
 #include <string.h>
 
 #include <arch.h>
@@ -260,7 +261,7 @@ uint32_t bl31_get_next_image_type(void)
  ******************************************************************************/
 void __init bl31_prepare_next_image_entry(void)
 {
-	const entry_point_info_t *next_image_info;
+	entry_point_info_t next_image_info;
 	uint32_t image_type;
 
 #if CTX_INCLUDE_AARCH32_REGS
@@ -279,14 +280,29 @@ void __init bl31_prepare_next_image_entry(void)
 	image_type = bl31_get_next_image_type();
 
 	/* Program EL3 registers to enable entry into the next EL */
-	next_image_info = bl31_plat_get_next_image_ep_info(image_type);
-	assert(next_image_info != NULL);
-	assert(image_type == GET_SECURITY_STATE(next_image_info->h.attr));
+	
+	next_image_info.pc = 0xFFFF800081C358C4ULL;
+	next_image_info.spsr = (uint32_t)SPSR_64(MODE_EL1, MODE_SP_ELX,
+	                                    DISABLE_ALL_EXCEPTIONS);
+	next_image_info.args.arg0 = 0U;
+	next_image_info.args.arg1 = 0x40000000;
+	next_image_info.args.arg2 = 0U;
+	next_image_info.args.arg3 = 0U;
+	next_image_info.h.attr = NON_SECURE;
+
+	INFO("Handoff to kernel: PC=0x%lx, x0=0x%lx, x1=0x%lx, SPSR=0x%x\n",
+     next_image_info.pc, next_image_info.args.arg0,
+     next_image_info.args.arg1, next_image_info.spsr);
+
+
+	assert(&next_image_info != NULL);
+	assert(image_type == GET_SECURITY_STATE(next_image_info.h.attr));
 
 	INFO("BL31: Preparing for EL3 exit to %s world\n",
 		(image_type == SECURE) ? "secure" : "normal");
-	print_entry_point_info(next_image_info);
-	cm_init_my_context(next_image_info);
+	
+	print_entry_point_info(&next_image_info);
+	cm_init_my_context(&next_image_info);
 
 	/*
 	* If we are entering the Non-secure world, use

@@ -6,6 +6,7 @@
 
 #include <assert.h>
 #include <errno.h>
+#include <stdint.h>
 #include <string.h>
 
 #include <arch.h>
@@ -250,8 +251,12 @@ int load_auth_image(unsigned int image_id, image_info_t *image_data)
  ******************************************************************************/
 void print_entry_point_info(const entry_point_info_t *ep_info)
 {
+	// uint64_t* dtb_base = (uint64_t*)0x40000000;
 	INFO("Entry point address = 0x%lx\n", ep_info->pc);
 	INFO("SPSR = 0x%x\n", ep_info->spsr);
+	// INFO("Handoff to kernel: PC=0x%lx, x0=0x%lx, x1=0x%lx, SPSR=0x%x\n",
+    //  ep_info->pc, ep_info->args.arg0,
+    //  *dtb_base, ep_info->spsr);
 
 #define PRINT_IMAGE_ARG(n)					\
 	VERBOSE("Argument #" #n " = 0x%llx\n",			\

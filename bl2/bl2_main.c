@@ -140,6 +140,7 @@ void bl2_main(void)
 	 * control to the BL32 (if present) and BL33 software images will
 	 * be passed to next BL image as an argument.
 	 */
+	NOTICE("BL2: Booting " NEXT_IMAGE "\n");
 	smc(BL1_SMC_RUN_IMAGE, (unsigned long)next_bl_ep_info, 0, 0, 0, 0, 0, 0);
 #else /* if BL2_RUNS_AT_EL3 */
 

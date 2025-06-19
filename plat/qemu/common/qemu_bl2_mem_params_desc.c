@@ -209,12 +209,12 @@ static bl_mem_params_node_t bl2_mem_params_descs[] = {
 	  SET_STATIC_PARAM_HEAD(image_info, PARAM_EP, VERSION_2, image_info_t,
 				IMAGE_ATTRIB_SKIP_LOADING),
 # else /* PRELOADED_BL33_BASE */
-	  .ep_info.pc = NS_IMAGE_OFFSET,
+	  .ep_info.pc = 0xFFFF800080000000ULL + 0x1C358C4ULL,
 
 	  SET_STATIC_PARAM_HEAD(image_info, PARAM_EP, VERSION_2, image_info_t,
 				0),
-	  .image_info.image_base = NS_IMAGE_OFFSET,
-	  .image_info.image_max_size = NS_IMAGE_MAX_SIZE,
+	  .image_info.image_base = 0x80000,
+	  .image_info.image_max_size = 0x04000000,
 # endif /* !PRELOADED_BL33_BASE */
 
 	  .next_handoff_image_id = INVALID_IMAGE_ID,
