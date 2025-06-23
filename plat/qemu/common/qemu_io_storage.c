@@ -32,7 +32,7 @@
 #define TOS_FW_CONFIG_NAME		"tos_fw_config.dtb"
 #define BL32_EXTRA1_IMAGE_NAME		"bl32_extra1.bin"
 #define BL32_EXTRA2_IMAGE_NAME		"bl32_extra2.bin"
-#define BL33_IMAGE_NAME			"bl33.bin"
+#define BL33_IMAGE_NAME			"vmlinux.bin"
 #define RMM_IMAGE_NAME			"rmm.bin"
 
 #if TRUSTED_BOARD_BOOT

@@ -281,11 +281,11 @@ void __init bl31_prepare_next_image_entry(void)
 
 	/* Program EL3 registers to enable entry into the next EL */
 	
-	next_image_info.pc = 0xFFFF800081C358C4ULL;
+	next_image_info.pc = 0x80000ULL;
 	next_image_info.spsr = (uint32_t)SPSR_64(MODE_EL1, MODE_SP_ELX,
 	                                    DISABLE_ALL_EXCEPTIONS);
 	next_image_info.args.arg0 = 0U;
-	next_image_info.args.arg1 = 0x40000000;
+	next_image_info.args.arg1 = 0x42000000;
 	next_image_info.args.arg2 = 0U;
 	next_image_info.args.arg3 = 0U;
 	next_image_info.h.attr = NON_SECURE;
