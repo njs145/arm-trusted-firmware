@@ -209,11 +209,13 @@ static bl_mem_params_node_t bl2_mem_params_descs[] = {
 	  SET_STATIC_PARAM_HEAD(image_info, PARAM_EP, VERSION_2, image_info_t,
 				IMAGE_ATTRIB_SKIP_LOADING),
 # else /* PRELOADED_BL33_BASE */
-	  .ep_info.pc = 0x80000,
+	  .ep_info.pc = 0x42000000,
+	  .ep_info.spsr = (uint32_t)SPSR_64(MODE_EL1, MODE_SP_ELX,
+	                                    DISABLE_ALL_EXCEPTIONS),
 
 	  SET_STATIC_PARAM_HEAD(image_info, PARAM_EP, VERSION_2, image_info_t,
 				0),
-	  .image_info.image_base = 0x80000,
+	  .image_info.image_base = 0x42000000,
 	  .image_info.image_max_size = 0x0d89b480,
 # endif /* !PRELOADED_BL33_BASE */
 
