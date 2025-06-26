@@ -421,5 +421,7 @@
 		bootargs = "console=ttyAMA0,38400 keep_bootcon";
 		stdout-path = "/pl011@9000000";
 		kaslr-seed = <0x70099f56 0x87ae2905>;
+		linux,initrd-start = <0x4F000000>;
+		linux,initrd-end   = <0x4f190a0b>;
 	};
 };

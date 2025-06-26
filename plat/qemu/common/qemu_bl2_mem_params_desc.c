@@ -220,7 +220,32 @@ static bl_mem_params_node_t bl2_mem_params_descs[] = {
 # endif /* !PRELOADED_BL33_BASE */
 
 	  .next_handoff_image_id = INVALID_IMAGE_ID,
-	}
+	},
+
+	{ .image_id = RFS_ID,
+
+	  SET_STATIC_PARAM_HEAD(ep_info, PARAM_EP, VERSION_2,
+				entry_point_info_t,
+				NON_SECURE | EXECUTABLE | EP_FIRST_EXE),
+	//   .ep_info.pc = BL31_BASE,
+	//   .ep_info.spsr = SPSR_64(MODE_EL3, MODE_SP_ELX,
+	// 			  DISABLE_ALL_EXCEPTIONS),
+# if DEBUG
+	  .ep_info.args.arg1 = QEMU_BL31_PLAT_PARAM_VAL,
+# endif
+	  SET_STATIC_PARAM_HEAD(image_info, PARAM_EP, VERSION_2, image_info_t,
+				IMAGE_ATTRIB_PLAT_SETUP),
+	  .image_info.image_base = 0x4F000000,
+	  .image_info.image_max_size = 0x01000000,
+
+# ifdef QEMU_LOAD_BL32
+	  .next_handoff_image_id = BL32_IMAGE_ID,
+# elif ENABLE_RME
+	  .next_handoff_image_id = RMM_IMAGE_ID,
+# else
+	//   .next_handoff_image_id = BL33_IMAGE_ID,
+# endif
+	},
 #endif /* !EL3_PAYLOAD_BASE */
 };
 

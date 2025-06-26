@@ -116,7 +116,10 @@
 /* Platform Key Certificate ID */
 #define PLAT_KEY_CERT_ID		U(38)
 
+/* Root File System ID*/
+#define RFS_ID		            U(39)
+
 /* Max Images */
-#define MAX_IMAGE_IDS			U(39)
+#define MAX_IMAGE_IDS			U(40)
 
 #endif /* ARM_TRUSTED_FIRMWARE_EXPORT_COMMON_TBBR_TBBR_IMG_DEF_EXP_H */

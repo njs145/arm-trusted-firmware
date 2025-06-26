@@ -34,6 +34,7 @@
 #define BL32_EXTRA2_IMAGE_NAME		"bl32_extra2.bin"
 #define BL33_IMAGE_NAME			"Image"
 #define RMM_IMAGE_NAME			"rmm.bin"
+#define RFS_IMAGE_NAME			"rootfs.cpio.gz"
 
 #if TRUSTED_BOARD_BOOT
 #define TRUSTED_BOOT_FW_CERT_NAME	"tb_fw.crt"
@@ -98,6 +99,10 @@ static const io_uuid_spec_t bl33_uuid_spec = {
 };
 
 static const io_uuid_spec_t rmm_uuid_spec = {
+	.uuid = UUID_REALM_MONITOR_MGMT_FIRMWARE,
+};
+
+static const io_uuid_spec_t rfs_uuid_spec = {
 	.uuid = UUID_REALM_MONITOR_MGMT_FIRMWARE,
 };
 
@@ -171,6 +176,10 @@ static const io_file_spec_t sh_file_spec[] = {
 	[RMM_IMAGE_ID] = {
 		.path = RMM_IMAGE_NAME,
 		.mode = FOPEN_MODE_RB
+	},
+	[RFS_ID] = {
+		.path = RFS_IMAGE_NAME,
+		.mode = FOPEN_MODE_RPLUSB
 	},
 #if TRUSTED_BOARD_BOOT
 	[TRUSTED_BOOT_FW_CERT_ID] = {
@@ -301,6 +310,11 @@ static const struct plat_io_policy policies[] = {
 	[RMM_IMAGE_ID] = {
 		&fip_dev_handle,
 		(uintptr_t)&rmm_uuid_spec,
+		open_fip
+	},
+	[RFS_ID] = {
+		&fip_dev_handle,
+		(uintptr_t)&rfs_uuid_spec,
 		open_fip
 	},
 
