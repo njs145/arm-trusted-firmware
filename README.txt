@@ -1,4 +1,4 @@
-This project is Arm trusted firmwware study.
+his project is Arm trusted firmwware study.
 
 사용법
 
@@ -6,12 +6,14 @@ This project is Arm trusted firmwware study.
 cd virt_image
 
 2. qemu 실행
-qemu-system-aarch64 -nographic -machine virt,secure=on -cpu cortex-a57  \
+qemu-system-aarch64 -nographic -machine virt,secure=on -cpu cortex-a53  \
     -kernel Image                           \
     -append "console=ttyAMA0,38400 keep_bootcon"   \
     -smp 2 -m 1024 -bios bl1.bin   \
     -d unimp -semihosting-config enable,target=native   \
     --machine virt,gic-version=2\
     -dtb virt-custom.dtb \
-    -device loader,addr=0x82000000,file=rootfs.cpio.gz \
-    -s -S
+    -netdev user,id=net0,hostfwd=tcp::10022-:22 \
+    -device virtio-net-device,netdev=net0 \
+    -virtfs local,path=/home/song/Work/ECT/qemu_share,security_model=none,mount_tag=hostshare \
+    -s
